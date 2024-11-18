@@ -26,6 +26,7 @@ You need to have the following installed on your machine:
    - Create a `.env` file in the root directory of the project
    - Add the following environment variables to the `.env` file:
 
+
      DB_HOST=localhost
      DB_USER=root
      DB_NAME=your-database-name
