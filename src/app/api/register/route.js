@@ -8,18 +8,15 @@ const dbConfig = {
   database: process.env.DB_NAME,
 };
 
-// Named export for handling POST requests
 export async function POST(req) {
   console.log('SERVER COMPONENT - REGISTER - POST');
   const { username, email, password } = await req.json();
 
-  // Hash the password
   const passwordHash = await bcrypt.hash(password, 10);
 
   try {
     const connection = await createConnection(dbConfig);
 
-    // Check if the username or email already exists
     const [existingUser] = await connection.execute(
       'SELECT * FROM users WHERE username = ? OR email = ?',
       [username, email]
@@ -39,7 +36,6 @@ export async function POST(req) {
       );
     }
 
-    // Insert the new user into the database
     await connection.execute(
       'INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)',
       [username, email, passwordHash]
