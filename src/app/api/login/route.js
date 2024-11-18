@@ -3,10 +3,10 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const dbConfig = {
-  host: 'Ivaylos-MacBook-Pro.local',
-  user: 'root',
-  password: 'root',
-  database: 'ONLINEMARKETPLACE',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 };
 
 export async function POST(req) {
