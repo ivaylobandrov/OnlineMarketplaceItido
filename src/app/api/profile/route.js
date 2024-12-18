@@ -24,8 +24,6 @@ export async function POST(req) {
     const decoded = jwt.verify(token, 'your_secret_key');
     const userId = decoded.id;
 
-    console.log('USER DECODED ID:', userId);
-
     const connection = await createConnection(dbConfig);
     const [rows] = await connection.execute(
       'SELECT * FROM users WHERE user_id = ?',

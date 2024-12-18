@@ -9,7 +9,6 @@ const dbConfig = {
 };
 
 export async function POST(req) {
-  console.log('SERVER COMPONENT - REGISTER - POST');
   const { username, email, password } = await req.json();
 
   const passwordHash = await bcrypt.hash(password, 10);
