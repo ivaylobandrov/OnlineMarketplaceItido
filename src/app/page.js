@@ -28,6 +28,7 @@ const HomePage = () => {
       ) : (
         <>
           <p className="mb-2">Welcome back!</p>
+          <a href="/profile">Profile page</a>
           <button
             onClick={handleLogout}
             className="bg-red-500 text-white p-2 rounded"
