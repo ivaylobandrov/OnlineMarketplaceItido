@@ -16,16 +16,15 @@ You need to have the following installed on your machine:
 
 1. Clone the repository:
 
-   git clone 
+   git clone
    cd your-project-name
    npm install
-   
+
 2. Setup the database:
 
    - Create a new database in MySQL
    - Create a `.env` file in the root directory of the project
    - Add the following environment variables to the `.env` file:
-
 
      DB_HOST=localhost
      DB_USER=root
@@ -34,14 +33,13 @@ You need to have the following installed on your machine:
 
    - Run the following command to create the tables in the database:
 
+   CREATE TABLE users (
+   user_id SERIAL PRIMARY KEY,
+   username VARCHAR(50) UNIQUE NOT NULL,
+   email VARCHAR(100) UNIQUE NOT NULL,
+   password_hash VARCHAR(255) NOT NULL
+   );
 
-    CREATE TABLE users (
-        user_id SERIAL PRIMARY KEY,
-        username VARCHAR(50) UNIQUE NOT NULL,
-        email VARCHAR(100) UNIQUE NOT NULL,
-        password_hash VARCHAR(255) NOT NULL
-    );
-     
 3. Start the development server:
 
    npm run dev

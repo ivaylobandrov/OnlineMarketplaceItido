@@ -1,7 +1,7 @@
 'use client';
 
 import { Provider } from 'react-redux';
-import store from '../store';
+import store from '@/store';
 import { setUser } from '@/store/authSlice';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';

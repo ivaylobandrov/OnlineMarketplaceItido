@@ -23,14 +23,17 @@ export async function POST(req) {
     const image = formData.get('image'); // File object
 
     if (!name || !price || !stock_quantity || !user_id || !image) {
-      return NextResponse.json({ success: false, message: 'Missing required fields' }, { status: 400 });
+      return NextResponse.json(
+        { success: false, message: 'Missing required fields' },
+        { status: 400 }
+      );
     }
 
     // Handle file upload
     const uploadDir = join(process.cwd(), 'public', 'uploads', 'products');
     await mkdir(uploadDir, { recursive: true });
 
-    const fileName = `${Date.now()}-${image.name}`;
+    const fileName = image.name;
     const filePath = join(uploadDir, fileName);
     await writeFile(filePath, Buffer.from(await image.arrayBuffer()));
 
@@ -39,14 +42,28 @@ export async function POST(req) {
     const [result] = await connection.execute(
       `INSERT INTO products (user_id, name, description, price, stock_quantity, image_path) 
        VALUES (?, ?, ?, ?, ?, ?)`,
-      [user_id, name, description, price, stock_quantity, `/uploads/products/${fileName}`]
+      [
+        user_id,
+        name,
+        description,
+        price,
+        stock_quantity,
+        `/uploads/products/${fileName}`,
+      ]
     );
 
     connection.end();
 
-    return NextResponse.json({ success: true, message: 'Product added successfully' });
+    return NextResponse.json({
+      success: true,
+      message: 'Product added successfully',
+      product_id: result.insertId,
+    });
   } catch (error) {
     console.error('Error uploading product:', error);
-    return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }

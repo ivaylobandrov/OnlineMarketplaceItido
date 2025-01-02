@@ -49,6 +49,33 @@ export default function ProductUploadForm() {
 
       const result = await response.json();
       if (result.success) {
+
+        // Now, index the product in Elasticsearch
+        const indexResponse = await fetch('/api/index', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: result.product_id, // Assuming result.productId contains the new product ID
+            name: formData.name,
+            description: formData.description,
+            price: formData.price,
+            stock_quantity: formData.stock_quantity,
+            image_path: `/uploads/products/${formData.image.name}`,
+          }),
+        });
+
+        // Check if the indexing was successful
+        const indexResult = await indexResponse.json();
+        if (indexResult.result) {
+          setUploadStatus('Product indexed successfully in Elasticsearch!');
+        } else {
+          setUploadStatus(
+            'Product uploaded, but failed to index in Elasticsearch.'
+          );
+        }
+
         setUploadStatus('Product uploaded successfully!');
         setFormData({
           name: '',

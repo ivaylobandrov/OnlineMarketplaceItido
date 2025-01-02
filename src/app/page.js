@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '@/store/authSlice';
+import ProductListing from '@/components/ProductListing';
 
 const HomePage = () => {
   const user = useSelector((state) => state.auth.user);
@@ -15,7 +16,9 @@ const HomePage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold mb-4">Welcome to My Next.js App</h1>
+      <h1 className="text-3xl font-bold mb-4">
+        Welcome to the Online Marketplace
+      </h1>
       {!user ? (
         <>
           <Link href="/login" className="text-blue-500 mb-2">
@@ -38,6 +41,7 @@ const HomePage = () => {
           </button>
         </>
       )}
+      <ProductListing />
     </div>
   );
 };

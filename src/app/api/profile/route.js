@@ -39,10 +39,16 @@ export async function POST(req) {
 
     const user = rows[0];
 
-    const isValidPassword = await bcrypt.compare(currentPassword, user.password_hash);
+    const isValidPassword = await bcrypt.compare(
+      currentPassword,
+      user.password_hash
+    );
     if (!isValidPassword) {
       return new Response(
-        JSON.stringify({ success: false, message: 'Incorrect current password' }),
+        JSON.stringify({
+          success: false,
+          message: 'Incorrect current password',
+        }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
@@ -55,7 +61,10 @@ export async function POST(req) {
     );
 
     return new Response(
-      JSON.stringify({ success: true, message: 'Password updated successfully' }),
+      JSON.stringify({
+        success: true,
+        message: 'Password updated successfully',
+      }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error) {
