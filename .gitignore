@@ -43,5 +43,4 @@ next-env.d.ts
 /public
 
 # Elasticsearch
-/elasticsearch-8.17.0-darwin-x86_64.tar.gz
 /elasticsearch-8.17.0/
