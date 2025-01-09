@@ -2,11 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
 
 const ProductListing = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [uploadStatus, setUploadStatus] = useState('');
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     // Fetch products from the API
@@ -25,6 +27,25 @@ const ProductListing = () => {
 
     fetchProducts();
   }, []);
+
+  const handleDelete = async (product_id) => {
+    try {
+      const response = await fetch('/api/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ product_id: product_id }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Delete request failed');
+      }
+    } catch (error) {
+      console.error('Delete error:', error);
+    }
+  }
 
   const handleSearch = async (event) => {
     event.preventDefault();
@@ -91,6 +112,9 @@ const ProductListing = () => {
                 width={200}
                 height={200}
               />
+              <button onClick={() => handleDelete(product.product_id)}>Delete</button>
+              <button>See details</button>
+              <button>Add to Cart</button>
             </div>
           </li>
         ))}
