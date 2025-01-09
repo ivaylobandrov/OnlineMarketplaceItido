@@ -45,7 +45,7 @@ const ProductListing = () => {
     } catch (error) {
       console.error('Delete error:', error);
     }
-  }
+  };
 
   const handleSearch = async (event) => {
     event.preventDefault();
@@ -112,7 +112,9 @@ const ProductListing = () => {
                 width={200}
                 height={200}
               />
-              <button onClick={() => handleDelete(product.product_id)}>Delete</button>
+              <button onClick={() => handleDelete(product.product_id)}>
+                Delete
+              </button>
               <button>See details</button>
               <button>Add to Cart</button>
             </div>

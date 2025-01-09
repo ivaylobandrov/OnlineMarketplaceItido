@@ -49,7 +49,6 @@ export default function ProductUploadForm() {
 
       const result = await response.json();
       if (result.success) {
-
         // Now, index the product in Elasticsearch
         const indexResponse = await fetch('/api/index', {
           method: 'POST',
