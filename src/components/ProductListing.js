@@ -83,25 +83,32 @@ const ProductListing = () => {
   };
 
   return (
-    <div>
-      <h1>Product Listing</h1>
-      <form onSubmit={handleSearch}>
+    <div className="container mx-auto p-4">
+      <form
+        onSubmit={handleSearch}
+        className="mb-4 flex items-center space-x-2"
+      >
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search products"
+          className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <button type="submit">Search</button>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-200"
+        >
+          Search
+        </button>
       </form>
-      <ul>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {products.map((product) => (
-          <li key={product.product_id}>
-            <div>
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
-              <p>Price: ${product.price}</p>
-              <p>Stock Quantity: {product.stock_quantity}</p>
+          <li
+            key={product.product_id}
+            className="bg-white shadow-md rounded-lg p-4"
+          >
+            <div className="flex flex-col items-center">
               <Image
                 src={
                   `/uploads/products/${product.image_path}`
@@ -111,12 +118,28 @@ const ProductListing = () => {
                 alt={product.name}
                 width={200}
                 height={200}
+                className="mb-4 rounded"
               />
-              <button onClick={() => handleDelete(product.product_id)}>
-                Delete
-              </button>
-              <button>See details</button>
-              <button>Add to Cart</button>
+              <h3 className="text-lg font-semibold">{product.name}</h3>
+              <p className="text-gray-700">{product.description}</p>
+              <p className="text-xl font-bold my-2">Price: ${product.price}</p>
+              <p className="text-gray-600">
+                Stock Quantity: {product.stock_quantity}
+              </p>
+              <div className="mt-4 flex space-x-2">
+                <button
+                  onClick={() => handleDelete(product.product_id)}
+                  className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition duration-200"
+                >
+                  Delete
+                </button>
+                <button className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-200">
+                  See details
+                </button>
+                <button className="bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition duration-200">
+                  Add to Cart
+                </button>
+              </div>
             </div>
           </li>
         ))}

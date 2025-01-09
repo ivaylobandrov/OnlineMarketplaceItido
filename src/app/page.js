@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '@/store/authSlice';
 import ProductListing from '@/components/ProductListing';
+import LoginForm from '@/components/LoginForm';
+import RegistrationForm from '@/components/RegistrationForm';
+import NavBar from '@/components/NavBar';
 
 const HomePage = () => {
   const user = useSelector((state) => state.auth.user);
@@ -16,32 +19,14 @@ const HomePage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold mb-4">
-        Welcome to the Online Marketplace
-      </h1>
-      {!user ? (
-        <>
-          <Link href="/login" className="text-blue-500 mb-2">
-            Login
-          </Link>
-          <Link href="/register" className="text-blue-500">
-            Register
-          </Link>
-        </>
-      ) : (
-        <>
-          <p className="mb-2">Welcome back!</p>
-          <a href="/profile">Profile page</a>
-          <a href="/product">Upload page</a>
-          <button
-            onClick={handleLogout}
-            className="bg-red-500 text-white p-2 rounded"
-          >
-            Logout
-          </button>
-        </>
+      <NavBar />
+      {!user && (
+        <div className="flex flex-col items-center">
+          <LoginForm />
+          <RegistrationForm />
+        </div>
       )}
-      <ProductListing />
+      {user && <ProductListing />}
     </div>
   );
 };

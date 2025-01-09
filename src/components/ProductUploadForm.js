@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import NavBar from '@/components/NavBar';
 
 export default function ProductUploadForm() {
   const { user } = useSelector((state) => state.auth);
@@ -94,72 +95,91 @@ export default function ProductUploadForm() {
   };
 
   return (
-    <div className="container mx-auto py-10">
-      <h1 className="text-2xl font-bold mb-5">Upload a Product</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block font-medium">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-3 py-2"
-            required
-          />
+    <>
+      <NavBar />
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 py-10">
+        <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-lg">
+          <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">
+            Upload a Product
+          </h1>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block font-medium mb-1 text-gray-700">
+                Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-1 text-gray-700">
+                Description
+              </label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-1 text-gray-700">
+                Price
+              </label>
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-1 text-gray-700">
+                Stock Quantity
+              </label>
+              <input
+                type="number"
+                name="stock_quantity"
+                value={formData.stock_quantity}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-1 text-gray-700">
+                Image
+              </label>
+              <input
+                type="file"
+                name="image"
+                onChange={handleFileChange}
+                className="w-full border border-gray-300 rounded-md px-4 py-2"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-200 w-full"
+            >
+              Upload Product
+            </button>
+          </form>
+          {uploadStatus && (
+            <p className="mt-4 text-sm text-gray-700 text-center">
+              {uploadStatus}
+            </p>
+          )}
         </div>
-        <div>
-          <label className="block font-medium">Description</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-3 py-2"
-            required
-          />
-        </div>
-        <div>
-          <label className="block font-medium">Price</label>
-          <input
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-3 py-2"
-            required
-          />
-        </div>
-        <div>
-          <label className="block font-medium">Stock Quantity</label>
-          <input
-            type="number"
-            name="stock_quantity"
-            value={formData.stock_quantity}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-3 py-2"
-            required
-          />
-        </div>
-        <div>
-          <label className="block font-medium">Image</label>
-          <input
-            type="file"
-            name="image"
-            onChange={handleFileChange}
-            className="w-full border border-gray-300 rounded px-3 py-2"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          Upload Product
-        </button>
-      </form>
-      {uploadStatus && (
-        <p className="mt-4 text-sm text-gray-700">{uploadStatus}</p>
-      )}
-    </div>
+      </div>
+    </>
   );
 }
