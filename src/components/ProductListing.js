@@ -1,17 +1,21 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
+import { addToCart } from '@/store/cartSlice';
+import Link from 'next/link';
 
 const ProductListing = () => {
+  const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [uploadStatus, setUploadStatus] = useState('');
   const { user } = useSelector((state) => state.auth);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    // Fetch products from the API
     const fetchProducts = async () => {
       try {
         const response = await fetch('/api/list');
@@ -51,7 +55,6 @@ const ProductListing = () => {
     event.preventDefault();
 
     if (!searchTerm) {
-      // Optionally, display a message when the search term is empty
       setUploadStatus('Please enter a search term.');
       return;
     }
@@ -82,8 +85,30 @@ const ProductListing = () => {
     }
   };
 
+  const addToCartHandler = (product) => {
+    const existingProduct = cart.find(
+      (item) => item.product_id === product.product_id
+    );
+    if (existingProduct) {
+      setCart(
+        cart.map((item) =>
+          item.product_id === product.product_id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      );
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+    }
+    dispatch(addToCart(product));
+    setUploadStatus(`${product.name} added to cart.`);
+  };
+
   return (
     <div className="container mx-auto p-4">
+      <div>
+        <Link href="/cart">Go to Cart</Link>
+      </div>
       <form
         onSubmit={handleSearch}
         className="mb-4 flex items-center space-x-2"
@@ -136,7 +161,10 @@ const ProductListing = () => {
                 <button className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-200">
                   See details
                 </button>
-                <button className="bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition duration-200">
+                <button
+                  onClick={() => addToCartHandler(product)}
+                  className="bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition duration-200"
+                >
                   Add to Cart
                 </button>
               </div>
