@@ -1,7 +1,8 @@
 'use client';
 
+import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
-import store from '@/store';
+import store, { persistor } from '@/store';
 import { setUser } from '@/store/authSlice';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
@@ -26,7 +27,13 @@ const ReduxProvider = ({ children }) => {
     return <div className="loading-spinner">Loading...</div>;
   }
 
-  return <Provider store={store}>{children}</Provider>;
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        {children}
+      </PersistGate>
+    </Provider>
+  );
 };
 
 export default ReduxProvider;

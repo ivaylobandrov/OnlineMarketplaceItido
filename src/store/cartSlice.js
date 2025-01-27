@@ -17,13 +17,18 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart: (state, action) => {
-      state.items = state.items.filter(item => item.product_id !== action.payload);
-    }
-  }
+      state.items = state.items.filter(
+        (item) => item.product_id !== action.payload
+      );
+    },
+    clearCart: (state) => {
+      state.items = []; // Reset items to empty array
+    },
+  },
 });
 
 // Export actions
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
 
 // Export the reducer
 export default cartSlice.reducer;

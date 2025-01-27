@@ -1,10 +1,16 @@
 'use client';
 
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeFromCart } from '@/store/cartSlice';
 
 const Cart = () => {
+  const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
+
+  const handleRemoveItem = (item) => {
+    dispatch(removeFromCart(item));
+  };
 
   return (
     <div className="cart">
@@ -26,6 +32,9 @@ const Cart = () => {
                   width={100}
                   height={100}
                 />
+                <button onClick={() => handleRemoveItem(item)}>
+                  Remove Item
+                </button>
               </div>
             </li>
           ))}

@@ -2,14 +2,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/store/authSlice';
 import Link from 'next/link';
 import { House } from '@phosphor-icons/react';
+import { redirect } from 'next/navigation';
+import { clearCart } from '@/store/cartSlice';
 
 const NavBar = () => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
+    dispatch(clearCart());
     dispatch(logout());
     localStorage.removeItem('token');
+    redirect('/login');
   };
 
   return (
