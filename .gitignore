@@ -44,3 +44,6 @@ next-env.d.ts
 
 # Elasticsearch
 /elasticsearch-8.17.0/
+
+#Kibana
+/kibana-8.17.1/
