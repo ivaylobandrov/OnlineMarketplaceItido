@@ -21,3 +21,4 @@ User model:
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     image_path VARCHAR(255)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE

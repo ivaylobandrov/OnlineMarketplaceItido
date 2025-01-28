@@ -7,9 +7,21 @@ import { removeFromCart } from '@/store/cartSlice';
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
+  const user = useSelector((state) => state.auth.user);
 
   const handleRemoveItem = (item) => {
     dispatch(removeFromCart(item));
+  };
+
+  const handleProceedToCheckout = async () => {
+    const response = await fetch('/api/order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({ items: cartItems }),
+    });
   };
 
   return (
@@ -40,7 +52,10 @@ const Cart = () => {
           ))}
         </ul>
       )}
-      <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+      <button
+        onClick={handleProceedToCheckout}
+        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+      >
         Proceed to Checkout
       </button>
     </div>
