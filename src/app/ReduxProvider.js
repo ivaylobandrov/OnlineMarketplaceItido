@@ -15,7 +15,9 @@ const ReduxProvider = ({ children }) => {
     if (token) {
       try {
         const decoded = jwtDecode(token); // Decode the token to get user data
-        store.dispatch(setUser({ id: decoded.id, token })); // Dispatch setUser with user ID and token
+        store.dispatch(
+          setUser({ id: decoded.id, token, is_admin: decoded.is_admin })
+        ); // Dispatch setUser with user ID, token and admin status
       } catch (error) {
         console.error('Invalid token:', error);
       }

@@ -27,9 +27,13 @@ export async function POST(req) {
         user.password_hash
       );
       if (isValidPassword) {
-        const token = jwt.sign({ id: user.user_id }, 'your_secret_key', {
-          expiresIn: '1h',
-        });
+        const token = jwt.sign(
+          { id: user.user_id, is_admin: user.is_admin },
+          'your_secret_key',
+          {
+            expiresIn: '1h',
+          }
+        );
         return new Response(JSON.stringify({ success: true, token }), {
           status: 200,
           headers: {
